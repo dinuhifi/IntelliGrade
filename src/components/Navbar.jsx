@@ -14,7 +14,7 @@ const Navbar = () => {
         <div className='max-w-7xl mx-auto flex justify-between items-center py-6'>
 
             <div className='pl-2'>
-                <a href='#'>
+                <a href='#hero'>
                     <img src={logo} width={120} height={10} alt='IntelliGrade'></img>
                 </a>
             </div>
@@ -35,9 +35,9 @@ const Navbar = () => {
         </div>
 
         <div className={`${isOpen ? "block" : "hidden"} md:hidden absolute bg-neutral-50 w-full py-5 px-4 mt-2 border-b-4`}>
-            <a className='uppercase text-lg font-medium block py-2 tracking-wide' href='#about'>About</a>  
-            <a className='uppercase text-lg font-medium block py-2 tracking-wide' href='#features'>Features</a>  
-            <a className='uppercase text-lg font-medium block py-2 tracking-wide' href='#contact'>Contact</a>
+            <a onClick={toggleMenu} className='uppercase text-lg font-medium block py-2 tracking-wide' href='#about'>About</a>  
+            <a onClick={toggleMenu} className='uppercase text-lg font-medium block py-2 tracking-wide' href='#features'>Features</a>  
+            <a onClick={toggleMenu} className='uppercase text-lg font-medium block py-2 tracking-wide' href='#contact'>Contact</a>
             <button onClick="" className='uppercase text-lg font-semibold block tracking-wide text-white bg-black rounded-md shadow-md px-2 py-2 mt-1'>Join Now!</button>
         </div>
 

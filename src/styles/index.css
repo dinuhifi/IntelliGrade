@@ -7,4 +7,5 @@
 :root {
     font-family: "Open Sans", sans-serif;
     background: #fafaf9;
+    scroll-behavior: smooth;
 }
