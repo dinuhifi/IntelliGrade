@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import logo from '../assets/IntelliGrade-logo.png'
 import { RiCloseLine, RiMenu3Line } from '@remixicon/react'
 
@@ -29,7 +30,9 @@ const Navbar = () => {
                 <a className='uppercase text-sm font-medium hover:text-green-400 transition transform hover:scale-105' href='#about'>About</a>
                 <a className='uppercase text-sm font-medium hover:text-green-400 transition transform hover:scale-105' href='#features'>Features</a>
                 <a className='uppercase text-sm font-medium hover:text-green-400 transition transform hover:scale-105' href='#contact'>Contact</a>
-                <button onClick="" className='uppercase text-white font-semibold text-sm bg-black px-4 py-1 hover:bg-green-600 hover:text-neutral transition rounded-md shadow-md transform hover:scale-105 relative -top-1'>Join Now!</button>
+                <Link to='/teacher/signup' onClick={toggleMenu}>
+                    <button onClick="" className='uppercase text-white font-semibold text-sm bg-black px-4 py-1 hover:bg-green-600 hover:text-neutral transition rounded-md shadow-md transform hover:scale-105 relative -top-1'>Join Now!</button>
+                </Link>
             </div>
 
         </div>
@@ -38,7 +41,9 @@ const Navbar = () => {
             <a onClick={toggleMenu} className='uppercase text-lg font-medium block py-2 tracking-wide' href='#about'>About</a>  
             <a onClick={toggleMenu} className='uppercase text-lg font-medium block py-2 tracking-wide' href='#features'>Features</a>  
             <a onClick={toggleMenu} className='uppercase text-lg font-medium block py-2 tracking-wide' href='#contact'>Contact</a>
-            <button onClick="" className='uppercase text-lg font-semibold block tracking-wide text-white bg-black rounded-md shadow-md px-2 py-2 mt-1'>Join Now!</button>
+            <Link to='/teacher/signup' onClick={toggleMenu}>
+                <button className='uppercase text-lg font-semibold block tracking-wide text-white bg-black rounded-md shadow-md px-2 py-2 mt-1'>Join Now!</button>
+            </Link>
         </div>
 
     </nav>
