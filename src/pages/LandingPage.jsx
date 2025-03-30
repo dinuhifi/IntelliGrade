@@ -1,6 +1,8 @@
 import About from "../components/About"
 import Hero from "../components/Hero"
 import Navbar from "../components/Navbar"
+import Features from "../components/Features"
+import Contact from "../components/Contact"
 
 const LandingPage = () => {
   return (
@@ -9,6 +11,8 @@ const LandingPage = () => {
           <Navbar />
           <Hero />
           <About />
+          <Features />
+          <Contact />
       </main>
     </>
   )
