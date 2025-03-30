@@ -37,6 +37,11 @@ const AuthForm = ({ title, isSignup, userType }) => {
               </Link> for {userType === "student" ? "Teacher" : "Student"} Portal
             </span>
           </div>
+          <div className="text-center mt-5">
+            <Link to="/" className="text-blue-600 underline">
+              Back to Home
+            </Link>
+          </div>
         </form>
       </div>
     </div>
