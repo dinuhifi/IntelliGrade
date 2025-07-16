@@ -1,4 +1,4 @@
-import TeacherDashboard from '../pages/dashboard'
+import TeacherDashboard from '../pages/TeacherDashboard'
 import LandingPage from '../pages/LandingPage'
 import TeacherLogin from '../pages/TeacherLogin'
 import TeacherSignup from '../pages/TeacherSignup'
