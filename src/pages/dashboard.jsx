@@ -1,7 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const TeacherDashboard = () => {
   const [loading, setLoading] = useState(false);
+  const [exams, setExams] = useState([]);
+  const [examLoading, setExamLoading] = useState(true);
+
+  useEffect(() => {
+    fetchExams();
+  }, []);
+
+  const fetchExams = async () => {
+    setExamLoading(true);
+    try {
+      const response = await fetch('http://localhost:8000/get_exams', {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setExams(data.exams);
+      } else {
+        console.error('Error fetching exams');
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+    } finally {
+      setExamLoading(false);
+    }
+  };
 
   const handleSignOut = async () => {
     setLoading(true);
@@ -66,11 +93,63 @@ const TeacherDashboard = () => {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
-          <div className="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center">
-            <div className="text-center">
-              <h2 className="text-2xl font-semibold text-gray-700 mb-4">Welcome to Your Dashboard</h2>
-              <p className="text-gray-500">Your exam management content will go here</p>
-            </div>
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Your Exams</h2>
+            
+            {examLoading ? (
+              <div className="flex justify-center items-center h-64">
+                <div className="text-gray-500">Loading exams...</div>
+              </div>
+            ) : exams.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="text-gray-500 text-lg">No exams found</div>
+                <p className="text-gray-400 mt-2">Click "Add Exam" to create your first exam</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {exams.map((exam) => (
+                  <div key={exam.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+                    <div className="flex justify-between items-start mb-4">
+                      <h3 className="text-lg font-semibold text-gray-900">{exam.subject_name || 'Untitled Exam'}</h3>
+                      <span className="text-sm text-gray-500">#{exam.id}</span>
+                    </div>
+                    
+                    <div className="space-y-2 mb-4">
+                      {exam.exam_date && (
+                        <p className="text-sm text-gray-600">
+                          <span className="font-medium">Date:</span> {new Date(exam.exam_date).toLocaleDateString()}
+                        </p>
+                      )}
+                      {exam.duration && (
+                        <p className="text-sm text-gray-600">
+                          <span className="font-medium">Duration:</span> {exam.duration} minutes
+                        </p>
+                      )}
+                      {exam.total_marks && (
+                        <p className="text-sm text-gray-600">
+                          <span className="font-medium">Total Marks:</span> {exam.total_marks}
+                        </p>
+                      )}
+                    </div>
+                    
+                    <div className="flex justify-between items-center">
+                      <button 
+                        className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                        onClick={() => {/* Navigate to exam details */}}
+                      >
+                        View Details
+                      </button>
+                      <button 
+                        className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors duration-200"
+                        onClick={() => {/* Navigate to correction page */}}
+                      >
+                        Start Correction
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </main>
