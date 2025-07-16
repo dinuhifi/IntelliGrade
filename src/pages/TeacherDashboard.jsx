@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import ExamList from '../components/ExamList';
 import ExamDetailsModal from '../components/ExamDetailsModal';
+import AddExamModal from '../components/AddExamModal';
 
 const TeacherDashboard = () => {
   const [signOutLoading, setSignOutLoading] = useState(false);
   const [exams, setExams] = useState([]);
   const [examLoading, setExamLoading] = useState(true);
   const [selectedExam, setSelectedExam] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [showAddExamModal, setShowAddExamModal] = useState(false);
   const [user, setUser] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
 
@@ -20,77 +22,45 @@ const TeacherDashboard = () => {
   const fetchUser = async () => {
     setUserLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/get_user', {
-        method: 'GET',
-        credentials: 'include',
-      });
-
+      const response = await fetch('http://localhost:8000/get_user', { method: 'GET', credentials: 'include' });
       if (response.ok) {
         const data = await response.json();
         setUser(data.user.user.user_metadata.email);
-      } else {
-        console.error('Error fetching user data');
-      }
-    } catch (error) {
-      console.error('Network error:', error);
-    } finally {
-      setUserLoading(false);
-    }
+      } else { console.error('Error fetching user data'); }
+    } catch (error) { console.error('Network error:', error); } 
+    finally { setUserLoading(false); }
   };
 
   const fetchExams = async () => {
     setExamLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/get_exams', {
-        method: 'GET',
-        credentials: 'include',
-      });
-
+      const response = await fetch('http://localhost:8000/get_exams', { method: 'GET', credentials: 'include' });
       if (response.ok) {
         const data = await response.json();
         setExams(data.exams);
-      } else {
-        console.error('Error fetching exams');
-      }
-    } catch (error) {
-      console.error('Network error:', error);
-    } finally {
-      setExamLoading(false);
-    }
+      } else { console.error('Error fetching exams'); }
+    } catch (error) { console.error('Network error:', error); } 
+    finally { setExamLoading(false); }
   };
 
   const handleSignOut = async () => {
     setSignOutLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/signout', {
-        method: 'GET',
-        credentials: 'include',
-      });
-
-      if (response.ok) {
-        window.location.href = '/teacher/login';
-      } else {
-        alert('Error signing out');
-      }
-    } catch (error) {
-      alert('Network error during sign out');
-    } finally {
-      setSignOutLoading(false);
-    }
-  };
-
-  const handleAddExam = () => {
-    window.location.href = '/add-exam';
+      const response = await fetch('http://localhost:8000/signout', { method: 'GET', credentials: 'include' });
+      if (response.ok) { window.location.href = '/teacher/login'; } 
+      else { alert('Error signing out'); }
+    } catch (error) { alert('Network error during sign out'); } 
+    finally { setSignOutLoading(false); }
   };
 
   const handleViewDetails = (exam) => {
     setSelectedExam(exam);
-    setShowModal(true);
+    setShowDetailsModal(true);
   };
-
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedExam(null);
+  
+  const handleExamAdded = () => {
+    setShowAddExamModal(false);
+    fetchExams();
   };
 
   return (
@@ -100,7 +70,7 @@ const TeacherDashboard = () => {
         userLoading={userLoading}
         signingOut={signOutLoading}
         onSignOut={handleSignOut}
-        onAddExam={handleAddExam}
+        onAddExam={() => setShowAddExamModal(true)}
       />
 
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
@@ -117,13 +87,18 @@ const TeacherDashboard = () => {
       </main>
 
       <ExamDetailsModal
-        show={showModal}
+        show={showDetailsModal}
         exam={selectedExam}
-        onClose={closeModal}
+        onClose={() => setShowDetailsModal(false)}
+      />
+
+      <AddExamModal
+        show={showAddExamModal}
+        onClose={() => setShowAddExamModal(false)}
+        onExamAdded={handleExamAdded}
       />
     </div>
   );
 };
 
-// In your App.js, you would now use the main TeacherDashboard component
 export default TeacherDashboard;
