@@ -1,14 +1,7 @@
-/**
- * A modal to display detailed information about a selected exam.
- * @param {object} props - The component props.
- * @param {boolean} props.show - Whether the modal is visible.
- * @param {object} props.exam - The selected exam object to display.
- * @param {function} props.onClose - Function to close the modal.
- */
-
 import StatusBadge from "./StatusBadge";
+import { Link } from "react-router-dom";
 
-const ExamDetailsModal = ({ show, exam, onClose }) => {
+const ExamDetailsModal = ({ show, exam, onClose}) => {
   if (!show || !exam) {
     return null;
   }
@@ -99,12 +92,11 @@ const ExamDetailsModal = ({ show, exam, onClose }) => {
           >
             Close
           </button>
-          <button
-            onClick={() => {/* Navigate to correction page */}}
-            className="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 transition-colors duration-200"
-          >
+          <Link to={`/correction/${exam.exam_id}`}>
+          <button className="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700">
             Start Correction
           </button>
+          </Link>
         </div>
       </div>
     </div>

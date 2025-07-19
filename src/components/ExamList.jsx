@@ -1,15 +1,6 @@
-/**
- * Renders the list of exams or loading/empty states.
- * @param {object} props - The component props.
- * @param {boolean} props.loading - Whether the exams are currently loading.
- * @param {Array} props.exams - The array of exam objects.
- * @param {function} props.onViewDetails - Function to pass to each ExamCard.
- */
-
 import ExamCard from "./ExamCard";
-import StatusBadge from "./StatusBadge";
 
-const ExamList = ({ loading, exams, onViewDetails }) => {
+const ExamList = ({ loading, exams, onViewDetails}) => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">

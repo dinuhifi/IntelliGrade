@@ -1,13 +1,7 @@
-/**
- * Displays a single exam card in the list.
- * @param {object} props - The component props.
- * @param {object} props.exam - The exam data object.
- * @param {function} props.onViewDetails - Function to trigger the details modal.
- */
-
+import { Link } from "react-router-dom";
 import StatusBadge from "./StatusBadge";
 
-const ExamCard = ({ exam, onViewDetails }) => {
+const ExamCard = ({ exam, onViewDetails}) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200 border border-gray-200">
       <div className="flex justify-between items-start mb-4">
@@ -32,12 +26,11 @@ const ExamCard = ({ exam, onViewDetails }) => {
         >
           View Details
         </button>
-        <button 
-          className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors duration-200"
-          onClick={() => {/* Navigate to correction page */}}
-        >
+        <Link to={`/correction/${exam.exam_id}`}>
+        <button className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors duration-200">
           Start Correction
         </button>
+        </Link>
       </div>
     </div>
   );
